@@ -18,32 +18,6 @@ Terraform versions
 ------------------
 Terraform 0.14.9
 
-```hcl
-module "mysql_firewall" {
-  source                           = "location of resource files"
-  resource_group_name              = var.resource_group_name
-  version                          = var.sql_version
-  administrator_login              = var.administrator_login
-  administrator_login_password     = var.administrator_login_password
-  tags                             = local.tags
-  name                             = var.sql_firewall_name
-  server_name                      = element(azurerm_sql_server.main.*.name, count.index)
-  start_ip_address                 = var.start_ip_address
-  end_ip_address                   = var.end_ip_address
-  location                         = element(var.regions, count.index)
-  edition                          = var.edition
-  requested_service_objective_name = var.requested_service_objective_name
-}
-```
-
-**NOTE: You can also refer the variables.tf file under example directory to get the idea on variables define in module.**
-
-Tags
-----
-* Tags are assigned to resources with name variable as prefix.
-* Additial tags can be assigned by tags variables as defined above.
-* Testing this.
-
 Resources
 ------
 | Name | Type |
@@ -77,6 +51,12 @@ Output
 | sql_server_id | Id's of SQL servers |
 | sql_database_id | Id's of Database |
 
+Tags
+----
+* Tags are assigned to resources with name variable as prefix.
+* Additial tags can be assigned by tags variables as defined above.
+* Testing this.
+
 ## Related Projects
 
 Check out these related projects.
@@ -84,6 +64,27 @@ Check out these related projects.
 * [Resource Group](https://registry.terraform.io/modules/OT-terraform-azure-modules/resource-group/azure/latest)
 * [SQL Failover](https://github.com/OT-terraform-azure-modules/terraform-azure-sql-failover)
 
+Usage
+-----
+```hcl
+module "mysql_firewall" {
+  source                           = "location of resource files"
+  resource_group_name              = var.resource_group_name
+  version                          = var.sql_version
+  administrator_login              = var.administrator_login
+  administrator_login_password     = var.administrator_login_password
+  tags                             = local.tags
+  name                             = var.sql_firewall_name
+  server_name                      = element(azurerm_sql_server.main.*.name, count.index)
+  start_ip_address                 = var.start_ip_address
+  end_ip_address                   = var.end_ip_address
+  location                         = element(var.regions, count.index)
+  edition                          = var.edition
+  requested_service_objective_name = var.requested_service_objective_name
+}
+```
+
+**NOTE: You can also refer the variables.tf file under example directory to get the idea on variables define in module.**
 
 ### Contributor
 
